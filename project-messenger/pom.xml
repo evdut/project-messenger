@@ -8,7 +8,7 @@
 	<name>project-messenger</name>
 
 	<modules>
-		<module>project-messenger-server</module>
+		<module>project-messenger-project</module>
 		<module>project-messenger-web</module>
 		<module>project-messenger-ear</module>
 	</modules>

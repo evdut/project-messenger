@@ -38,8 +38,8 @@
 					<modules>
 						<ejbModule>
 							<groupId>${project.groupId}</groupId>
-							<artifactId>project-messenger-server</artifactId>
-							<bundleFileName>project-messenger-server.jar</bundleFileName>
+							<artifactId>project-messenger-project</artifactId>
+							<bundleFileName>project-messenger-project.jar</bundleFileName>
 						</ejbModule>
 						<webModule>
 							<groupId>${project.groupId}</groupId>
@@ -64,7 +64,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.project-messenger</groupId>
-			<artifactId>project-messenger-server</artifactId>
+			<artifactId>project-messenger-project</artifactId>
 			<version>${project-messenger.version}</version>
 			<type>ejb</type>
 		</dependency>

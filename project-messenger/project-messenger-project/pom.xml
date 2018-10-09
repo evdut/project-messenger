@@ -8,7 +8,7 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>project-messenger-server</artifactId>
+	<artifactId>project-messenger-project</artifactId>
 	<packaging>ejb</packaging>
 
 	<name>project-messenger-server</name>

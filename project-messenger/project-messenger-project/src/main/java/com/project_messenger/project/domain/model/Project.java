@@ -1,8 +1,13 @@
-package com.project_messenger.project.domain;
+package com.project_messenger.project.domain.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
+
+import org.javamoney.moneta.Money;
 
 public class Project implements Serializable {
 
@@ -13,16 +18,27 @@ public class Project implements Serializable {
     // "PROJECT_ID_SEQ", allocationSize = 1)
     private Long id;
 
+    private String uuid;
+    
     @NotNull
     private String title;
 
     private String description;
 
-    private String uuid;
-
-    public Project(String title, String description) {
-        this.title = title;
-        this.description = description;
+    private LocalDate dueDate;
+    
+    private Money costs;
+    
+    private String status;
+    
+    private User owner;
+    
+    private List<User> participants;
+    
+    public Project(String title, String description, User owner) {
+        this.uuid = UUID.randomUUID().toString();
+        update(title, description);
+        this.owner = owner;
     }
 
     public void update(String title, String description) {
@@ -30,6 +46,8 @@ public class Project implements Serializable {
         this.description = description;
     }
 
+//    public void schedule
+    
     public String title() {
         return title;
     }

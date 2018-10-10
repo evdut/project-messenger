@@ -1,6 +1,6 @@
 package com.project_messenger.project.application.command;
 
-import com.project_messenger.project.domain.Project;
+import com.project_messenger.project.domain.model.Project;
 
 import net.evdut.cqrs.framework.api.GenericCommand;
 

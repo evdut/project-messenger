@@ -5,7 +5,8 @@ import javax.annotation.PreDestroy;
 import javax.transaction.Transactional;
 
 import com.project_messenger.project.application.command.CreateProject;
-import com.project_messenger.project.domain.Project;
+import com.project_messenger.project.domain.model.Project;
+import com.project_messenger.project.domain.model.User;
 
 import net.evdut.cqrs.framework.api.Handler;
 import net.evdut.cqrs.framework.command.CommandHandler;
@@ -28,6 +29,6 @@ public class CreateProjectCommandHandler implements Handler<CreateProject> {
 //	ProjectRepository projectRepository;
 
 	public void handle(CreateProject command) {
-	    command.setResult(new Project(command.title(), command.description()));
+	    command.setResult(new Project(command.title(), command.description(), new User("","")));
 	}
 }

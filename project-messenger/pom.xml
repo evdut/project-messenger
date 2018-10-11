@@ -1,20 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.project-messenger</groupId>
+
+    <groupId>com.project-messenger</groupId>
 	<artifactId>project-messenger</artifactId>
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
-	<name>project-messenger</name>
+
+    <name>project-messenger</name>
 
 	<modules>
 		<module>project-messenger-project</module>
-		<module>project-messenger-web</module>
-		<module>project-messenger-ear</module>
+        <module>project-messenger-web</module>
+        <module>project-messenger-chat</module>
+        <module>project-messenger-ear</module>
 	</modules>
+
 	<properties>
 		<project-messenger.version>0.0.1</project-messenger.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -22,10 +27,20 @@
 			<version>8.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-		    <groupId>javax.money</groupId>
-		    <artifactId>money-api</artifactId>
-		    <version>1.0.3</version>
-		</dependency>
 	</dependencies>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
 </project>

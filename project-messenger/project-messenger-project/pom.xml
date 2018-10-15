@@ -12,7 +12,7 @@
 	<artifactId>project-messenger-project</artifactId>
 	<packaging>ejb</packaging>
 
-	<name>project-messenger-server</name>
+	<name>project-messenger-project</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

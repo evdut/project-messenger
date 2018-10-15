@@ -29,6 +29,6 @@ public class CreateProjectCommandHandler implements Handler<CreateProject> {
 //	ProjectRepository projectRepository;
 
 	public void handle(CreateProject command) {
-	    command.setResult(new Project(command.title(), command.description(), new User("","")));
+	    command.setResult(new Project(command.title(), command.description(), "USD", new User("","")));
 	}
 }

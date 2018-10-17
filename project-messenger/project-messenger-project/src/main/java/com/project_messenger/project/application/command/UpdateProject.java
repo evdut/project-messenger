@@ -4,19 +4,19 @@ import com.project_messenger.project.domain.model.Project;
 
 import net.evdut.cqrs.framework.api.GenericCommand;
 
-public class CreateProject extends GenericCommand<Project> {
+public class UpdateProject extends GenericCommand<Project> {
 
+    private String uuid;
+    
     private String title;
 
     private String description;
-
-    private String userIdentificator;
     
-    public CreateProject(String title, String description, String userIdentificator) {
+    public UpdateProject(String title, String description, String uuid) {
         super();
         this.title = title;
         this.description = description;
-        this.userIdentificator = userIdentificator;
+        this.uuid = uuid;
     }
 
     public String title() {
@@ -26,8 +26,8 @@ public class CreateProject extends GenericCommand<Project> {
     public String description() {
         return description;
     }
-
-    public String userIdentificator() {
-        return userIdentificator;
+    
+    public String uuid() {
+        return uuid;
     }
 }

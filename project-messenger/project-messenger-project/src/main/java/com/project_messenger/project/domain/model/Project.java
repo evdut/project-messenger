@@ -3,6 +3,7 @@ package com.project_messenger.project.domain.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,7 +113,7 @@ public class Project implements Serializable {
         validateTask(task);
         int index = tasks.indexOf(task);
         if(index < 0) {
-            throw new RuntimeException("You do not have such task creteated '" + task.title() + "'");
+            throw new RuntimeException("You do not have such task created '" + task.title() + "'");
         }
         Task oldTask = this.tasks.set(index, task);
         calculateRevenue(oldTask.costs(), task.costs());
@@ -173,8 +174,7 @@ public class Project implements Serializable {
         return invited;
     }
 
-    @SuppressWarnings("unchecked")
     public List<Task> tasks() {
-        return (List<Task>)((ArrayList<Task>)tasks).clone();
+        return Collections.unmodifiableList(tasks);
     }
 }

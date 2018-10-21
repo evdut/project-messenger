@@ -1,8 +1,10 @@
 package com.project_messenger.project.application.command;
 
+import com.project_messenger.project.domain.model.Project;
+
 import net.evdut.cqrs.framework.api.GenericCommand;
 
-public class StartProject extends GenericCommand<String> {
+public class StartProject extends GenericCommand<Project> {
 
     private String uuid;
    

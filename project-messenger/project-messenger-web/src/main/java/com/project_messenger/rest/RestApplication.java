@@ -1,4 +1,4 @@
-package com.brickchain.projectTracker.adapter.rest;
+package com.project_messenger.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

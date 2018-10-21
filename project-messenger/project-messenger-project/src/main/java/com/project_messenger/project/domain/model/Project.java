@@ -28,7 +28,7 @@ public class Project implements Serializable {
     private LocalDate dueDate;
 
     private Money budget;
-    
+
     private Money revenue;
 
     private Status status;
@@ -55,6 +55,7 @@ public class Project implements Serializable {
 
     public void start() {
         this.status = Status.IN_PROGRESS;
+        tasks.forEach(task -> task.start());
     }
 
     public void finish() {
@@ -79,18 +80,18 @@ public class Project implements Serializable {
 
     public void addBudget(Money budget) {
         Money newRevenue = budget.subtract(this.budget).add(revenue);
-        if(newRevenue.isLessThan(Money.zero(this.budget.getCurrency()))) {
+        if (newRevenue.isLessThan(Money.zero(this.budget.getCurrency()))) {
             throw new RuntimeException("You will got negative revenue if accept this budget: " + budget);
         }
         this.budget = budget;
         this.revenue = newRevenue;
     }
-    
+
     public void addBudgetImplicitly(Money budget) {
         this.budget = budget;
         this.revenue = budget.subtract(this.budget).add(revenue);
     }
-    
+
     public void invite(User invited) {
         this.invited.add(invited);
     }
@@ -102,35 +103,54 @@ public class Project implements Serializable {
 
     public void addTask(Task task) {
         validateTask(task);
-        if (tasks.contains(task)) {
-            throw new RuntimeException("Task " + task.title() + " already exists");
+        addTaskImplicitly(task);
+        if (revenue.isLessThan(Money.zero(this.budget.getCurrency()))) {
+            throw new RuntimeException("You will got negative revenue if add this task: " + task.title());
         }
-        this.tasks.add(task);
-        calculateRevenue(null, task.costs());
     }
 
     public void updateTask(Task task) {
         validateTask(task);
+        updateTaskImplicitly(task);
+        if (revenue.isLessThan(Money.zero(this.budget.getCurrency()))) {
+            throw new RuntimeException("You will got negative revenue if accept new costs of this task: " + task.title());
+        }
+    }
+    
+    public void addTaskImplicitly(Task task) {
+        if(!status.equals(Status.CREATED)) {
+            task.start();
+        }
+        if (tasks.contains(task)) {
+            throw new RuntimeException("Task " + task.title() + " already exists");
+        }
+        this.tasks.add(task);
+        this.revenue = calculateRevenue(null, task.costs());
+    }
+
+    public void updateTaskImplicitly(Task task) {
         int index = tasks.indexOf(task);
-        if(index < 0) {
+        if (index < 0) {
             throw new RuntimeException("You do not have such task created '" + task.title() + "'");
         }
         Task oldTask = this.tasks.set(index, task);
-        calculateRevenue(oldTask.costs(), task.costs());
+        this.revenue = calculateRevenue(oldTask.costs(), task.costs());
     }
-    
-    private void calculateRevenue(Money toAdd, Money toSubstruct) {
-        if(toAdd != null) {
-            this.revenue = revenue.add(toAdd);
+
+    private Money calculateRevenue(Money toAdd, Money toSubstruct) {
+        Money result = null;
+        if (toAdd != null) {
+            result = revenue.add(toAdd);
         }
-        if(toSubstruct != null) {
-            this.revenue = revenue.subtract(toSubstruct);
+        if (toSubstruct != null) {
+            result = revenue.subtract(toSubstruct);
         }
+        return result;
     }
-    
+
     private void validateTask(Task task) {
         if (task.dueDate() != null && task.dueDate().isAfter(dueDate)) {
-            throw new RuntimeException("You have task that ends after " + dueDate);
+            throw new RuntimeException("Task '" + task.title() + "' ends after " + dueDate);
         }
     }
 
@@ -157,7 +177,7 @@ public class Project implements Serializable {
     public Money revenue() {
         return revenue;
     }
-    
+
     public Status status() {
         return status;
     }
@@ -176,5 +196,10 @@ public class Project implements Serializable {
 
     public List<Task> tasks() {
         return Collections.unmodifiableList(tasks);
+    }
+
+    public Task task(String taskUuid) {
+        return tasks().stream().filter(task -> taskUuid.equals(task.uuid())).findFirst()
+                .orElseThrow(() -> new RuntimeException("Task '" + taskUuid + "' not found in project " + uuid));
     }
 }

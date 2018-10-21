@@ -3,8 +3,8 @@ package com.project_messenger.chat.interfaces.websocket;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/chat")
-public class ChatEndpoint {
+@ServerEndpoint("/chat/{uuid}")
+public class ChatWebSocketEndpoint {
 
     @OnOpen
     public void connect(final Session session) {
